@@ -1,0 +1,13 @@
+Package: SThelperfunctions
+Type: Package
+Title: Helper Functions For Spatiotemporal Analysis
+Version: 0.1.0
+Author: Emanuel Dominic
+Maintainer: The package maintainer <emanuel@sun.ac.za>
+Description: This package contains functions for data cleaning and analysing spatio-temporal data on causes of deaths.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+      rlang,
+      dplyr
