@@ -64,7 +64,8 @@ detrending_fun <- function(df,
 
   det.data <- if (scale.aggregate == "Province")
   {group_by(df, DeathProv) %>%
-      mutate(t = seq(from = 1997, to = 2016.999, by = 1/time.cycle)) %>%
+      mutate(tt = seq(from = 1997, to = 2016.999, by = 1/time.cycle),
+             t = row_number()) %>%
       ungroup() %>%
       gather(key = "death",
              value = "rates",
@@ -73,7 +74,9 @@ detrending_fun <- function(df,
       group_by(DeathProv, death) %>%
       nest()
   }
-  else {mutate(df, t = seq(from = 1997.000, to = 2016.999, by = 1/time.cycle)) %>%
+  else {mutate(df,
+               tt = seq(from = 1997.000, to = 2016.999, by = 1/time.cycle),
+               t = row_number()) %>%
       gather(key = "death",
              value = "rates",
              All_deaths_rate:RSV_deaths_rate,
@@ -98,9 +101,9 @@ plot_provincial_detrended <- function(df,
   df %>%
     filter(death == COD) %>%
     ggplot()+
-    geom_line(aes(x = t, y = rates), col = "black")+
-    geom_line(aes(x = t, y = trend),col = "red", size = 1)+
-    geom_line(aes(x = t, y = detrended_plus_mean), col = "blue")+
+    geom_line(aes(x = tt, y = rates), col = "black")+
+    geom_line(aes(x = tt, y = trend),col = "red", size = 1)+
+    geom_line(aes(x = tt, y = detrended_plus_mean), col = "blue")+
     facet_wrap(~DeathProv, nrow = 3, ncol = 3, scales = "free_y") +
     theme_bw()+
     xlab("") +

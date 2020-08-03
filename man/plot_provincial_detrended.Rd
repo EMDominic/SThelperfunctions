@@ -53,9 +53,9 @@ plot_provincial_detrended <- function(df,
   df \%>\%
     filter(death == COD) \%>\%
     ggplot()+
-    geom_line(aes(x = t, y = rates), col = "black")+
-    geom_line(aes(x = t, y = trend),col = "red", size = 1)+
-    geom_line(aes(x = t, y = detrended), col = "blue")+
+    geom_line(aes(x = tt, y = rates), col = "black")+
+    geom_line(aes(x = tt, y = trend),col = "red", size = 1)+
+    geom_line(aes(x = tt, y = detrended), col = "blue")+
     facet_wrap(~DeathProv, nrow = 3, ncol = 3, scales = "free_y") +
     theme_bw()+
     xlab("") +

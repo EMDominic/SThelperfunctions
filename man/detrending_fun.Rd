@@ -71,7 +71,8 @@ detrending_fun <- function(df,
 
   det.data <- if (scale.aggregate == "Province")
   {group_by(df, DeathProv) \%>\%
-      mutate(t = seq(from = 1997, to = 2016.999, by = 1/time.cycle)) \%>\%
+      mutate(tt = seq(from = 1997, to = 2016.999, by = 1/time.cycle),
+             t = row_number()) \%>\%
       ungroup() \%>\%
       gather(key = "death",
              value = "rates",
@@ -80,7 +81,9 @@ detrending_fun <- function(df,
       group_by(DeathProv, death) \%>\%
       nest()
   }
-  else {mutate(df, t = seq(from = 1997.000, to = 2016.999, by = 1/time.cycle)) %>%
+  else {mutate(df,
+                  tt = seq(from = 1997.000, to = 2016.999, by = 1/time.cycle),
+                  t = row_number()) \%>\%
       gather(key = "death",
              value = "rates",
              All_deaths_rate:RSV_deaths_rate,
